@@ -1,0 +1,49 @@
+/*
+ * Metric-matched stand-in for Fraunces while the web font loads, so the hero
+ * headline wraps the same way before and after the swap and nothing below it
+ * moves.
+ *
+ * Fraunces has an optical-size axis: its letters are noticeably wider at 50px
+ * than at 96px, so one size-adjust cannot match every breakpoint. Each block
+ * is tuned against the hero headline at that breakpoint's size (Fraunces is
+ * about 1.13× Times New Roman at 50px, 1.09× at 64px and 0.95× at opsz 96):
+ *
+ *   mobile   50px                                        → 112%
+ *   tablet   64px                                        → 108%
+ *   desktop  headline pinned to `opsz 96` (.heroTitle)   →  96%
+ *
+ * Verified by sweeping 320–1440px: the headline keeps its line count with and
+ * without the web font except at 531–532, 1130 and 1328px. Other headings are
+ * below the first screen. A later @font-face of the same family replaces the
+ * earlier one.
+ */
+@font-face {
+  font-family: 'Lumina Display Fallback';
+  src: local('Times New Roman'), local('Times');
+  ascent-override: 82%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+  size-adjust: 112%;
+}
+
+@media (min-width: 600px) {
+  @font-face {
+    font-family: 'Lumina Display Fallback';
+    src: local('Times New Roman'), local('Times');
+    ascent-override: 85%;
+    descent-override: 23%;
+    line-gap-override: 0%;
+    size-adjust: 108%;
+  }
+}
+
+@media (min-width: 1024px) {
+  @font-face {
+    font-family: 'Lumina Display Fallback';
+    src: local('Times New Roman'), local('Times');
+    ascent-override: 97%;
+    descent-override: 26%;
+    line-gap-override: 0%;
+    size-adjust: 96%;
+  }
+}
